@@ -8,6 +8,23 @@ export VISUAL=vim
 # Import our custom script directory into the path variable
 PATH=$PATH:$HOME/.bin
 
+# Alias Config
+# ============
+alias cdg='cd ~/gitRepos'
+alias cdb='cd ~/.bin'
+alias cdv='cd ~/.vim'
+alias la='ls -Al'
+
+alias gs='git status'
+alias gd='git diff'
+alias ga='git add'
+alias gl='git log'
+alias gsh='git show'
+alias gf='git fetch --prune'
+alias gps='git push origin'
+alias gpl='git pull origin'
+alias gp='git clean -x -d -f'
+
 
 # fzf Config
 # ==========
@@ -105,7 +122,9 @@ completions=(
 # Example format: aliases=(vagrant composer git-avh)
 # Add wisely, as too many aliases slow down shell startup.
 aliases=(
-#  general
+  ls
+  #chmod
+  #general
 )
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-bash/plugins/*)
