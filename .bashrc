@@ -23,7 +23,7 @@ alias gsh='git show'
 alias gf='git fetch --prune'
 alias gps='git push origin'
 alias gpl='git pull origin'
-alias gp='git clean -x -d -f'
+alias gpur='git clean -x -d -f'
 
 
 # fzf Config
