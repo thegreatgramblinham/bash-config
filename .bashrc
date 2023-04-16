@@ -12,16 +12,23 @@ PATH=$PATH:$HOME/.bin
 # Alias Config
 # ============
 alias src='. ~/.bashrc'
+
+alias la='ls -Al'
+
 alias cdg='cd ~/gitRepos'
 alias cdb='cd ~/.bin'
 alias cdv='cd ~/.vim'
-alias la='ls -Al'
 
+alias v='command vim'
+
+alias g='command git'
 alias ga='command git add'
 alias gb='command git branch'
 alias gpur='command git clean -x -d -f'
 alias gc='command git commit'
+alias gch='command git checkout'
 alias gd='command git diff'
+alias gds='command git diff --staged'
 alias gdt='command git difftool'
 alias gf='command git fetch --prune'
 alias gl='command git log'
@@ -33,6 +40,7 @@ alias gpl='command git pull'
 alias gr='command git remote'
 alias gsh='command git show'
 alias gs='command git status'
+alias gsa='command git stash'
 
 
 # fzf Config
