@@ -5,25 +5,34 @@
 export EDITOR=vim
 export VISUAL=vim
 
-# Import our custom script directory into the path variable
+# Import our custom script directories into the path variable
 PATH=$PATH:$HOME/.bin
+#PATH=$PATH:$HOME/.bin/git
 
 # Alias Config
 # ============
+alias src='. ~/.bashrc'
 alias cdg='cd ~/gitRepos'
 alias cdb='cd ~/.bin'
 alias cdv='cd ~/.vim'
 alias la='ls -Al'
 
-alias gs='git status'
-alias gd='git diff'
-alias ga='git add'
-alias gl='git log'
-alias gsh='git show'
-alias gf='git fetch --prune'
-alias gps='git push origin'
-alias gpl='git pull origin'
-alias gpur='git clean -x -d -f'
+alias ga='command git add'
+alias gb='command git branch'
+alias gpur='command git clean -x -d -f'
+alias gc='command git commit'
+alias gd='command git diff'
+alias gdt='command git difftool'
+alias gf='command git fetch --prune'
+alias gl='command git log'
+alias glg='command git log --graph --oneline --all'
+alias gm='command git merge'
+alias gmt='command git mergetool'
+alias gps='command git push'
+alias gpl='command git pull'
+alias gr='command git remote'
+alias gsh='command git show'
+alias gs='command git status'
 
 
 # fzf Config
@@ -44,7 +53,7 @@ esac
 # Path to your oh-my-bash installation.
 # NOTE: This seems to require an absolute path and will need to
 #       be replaced before use.
-export OSH='/home/samhudock/.oh-my-bash'
+export OSH='~/.oh-my-bash'
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-bash is loaded.
@@ -132,8 +141,8 @@ aliases=(
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git
-#  bashmarks
+#  git
+   bashmarks
 )
 
 # Which plugins would you like to conditionally load? (plugins can be found in ~/.oh-my-bash/plugins/*)
