@@ -16,10 +16,20 @@ alias src='. ~/.bashrc'
 alias la='ls -Al'
 
 alias cdg='cd ~/gitRepos'
+alias cdwg='cd /mnt/c/gitRepos/'
+alias cddps='cd /mnt/c/gitRepos/monarch-data-prep-studio/'
+alias cdmon='cd /mnt/c/gitRepos/monarch-classic/'
+alias cdplg='cd /mnt/c/gitRepos/monarch-dataprep/'
+alias cdcom='cd /mnt/c/gitRepos/monarch-desktop-common/'
 alias cdb='cd ~/.bin'
 alias cdv='cd ~/.vim'
+alias cdeeznuts='echo "lmao gottem"'
 
 alias v='command vim'
+
+alias gr='command grep'
+
+alias f='command find'
 
 alias g='command git'
 alias ga='command git add'
@@ -31,13 +41,13 @@ alias gd='command git diff'
 alias gds='command git diff --staged'
 alias gdt='command git difftool'
 alias gf='command git fetch --prune'
+alias gir='command git rebase -i'
 alias gl='command git log'
 alias glg='command git log --graph --oneline --all'
 alias gm='command git merge'
 alias gmt='command git mergetool'
 alias gps='command git push'
 alias gpl='command git pull'
-alias gr='command git remote'
 alias gsh='command git show'
 alias gs='command git status'
 alias gsa='command git stash'
@@ -48,6 +58,11 @@ alias gsa='command git stash'
 # Hook fzf functionality into bash
 source /usr/share/doc/fzf/examples/key-bindings.bash
 source /usr/share/doc/fzf/examples/completion.bash
+
+# Set the default command to include all files in the current
+# directory, excluding git files.
+# (Same as calling "<DEFAULT_COMMAND> | fzf")
+export FZF_DEFAULT_COMMAND="find . -not -path '**/.git/*"
 
 
 # Oh-my-bash! Config

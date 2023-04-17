@@ -19,9 +19,14 @@ PATH=$PATH:$HOME/<path_to_dir>/<relative_to>/<home_dir>
 #e.g. our scripts are stored in ~/.bin
 PATH=$PATH:$HOME/.bin
 ```
-Then after the addition, reload bash by calling:
+Then after the addition, reload the bashrc by calling:
 ```
-bash
+source ~/.bashrc
+OR
+. ~/.bashrc
+OR
+#if the alias is enabled
+src
 ```
 
 Writing scripts
