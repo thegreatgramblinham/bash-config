@@ -13,6 +13,8 @@ PATH=$PATH:$HOME/.bin
 # ============
 alias src='. ~/.bashrc'
 
+alias :q='exit'
+
 alias la='ls -Al'
 
 alias cdg='cd ~/gitRepos'
