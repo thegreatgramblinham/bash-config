@@ -62,7 +62,7 @@ source /usr/share/doc/fzf/examples/completion.bash
 # Set the default command to include all files in the current
 # directory, excluding git files.
 # (Same as calling "<DEFAULT_COMMAND> | fzf")
-export FZF_DEFAULT_COMMAND="find . -not -path '**/.git/*"
+export FZF_DEFAULT_COMMAND="find . -not -path '**/.git/*'"
 
 
 # Oh-my-bash! Config
@@ -170,7 +170,7 @@ plugins=(
 
 # Which plugins would you like to conditionally load? (plugins can be found in ~/.oh-my-bash/plugins/*)
 # Custom plugins may be added to ~/.oh-my-bash/custom/plugins/
-# Example format: 
+# Example format:
 #  if [ "$DISPLAY" ] || [ "$SSH" ]; then
 #      plugins+=(tmux-autoattach)
 #  fi
