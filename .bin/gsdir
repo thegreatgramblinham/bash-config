@@ -4,12 +4,12 @@
 # This part is still a wip. Trying to make it so that
 # a lack of argument uses the calling directory.
 argnum="$#"
-dir=""
-if [[ argnum -eq 0 ]]; then
-    dir=$PWD
-else
-    dir="$1"
-fi
+dir="$PWD"
+#if [[ argnum -eq 1 ]]; then
+#    dir=$PWD
+#else
+#    dir="$1"
+#fi
 
 for gitdir in "$dir"/*
 do
