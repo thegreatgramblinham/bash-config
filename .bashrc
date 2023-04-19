@@ -9,6 +9,21 @@ export VISUAL=vim
 PATH=$PATH:$HOME/.bin
 #PATH=$PATH:$HOME/.bin/git
 
+# Turn off all bells
+set bell-style none
+
+# Enable vi keybindings
+set -o vi
+set keymap vi
+# Display a prompt to indicate what mode we are in
+set show-mode-in-prompt on
+set vi-cmd-mode-string '[C]'
+set vi-ins-mode-string '[I]'
+
+# Add colors to completions!
+set colored-stats on
+set colored-completion-prefix on
+
 # Alias Config
 # ============
 alias src='. ~/.bashrc'
