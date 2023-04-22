@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+#Launch PrusaSlicer from the git repo build
+cd ~/gitRepos/PrusaSlicer/build/src/
+./prusa-slicer
