@@ -44,6 +44,8 @@ alias cdeeznuts='echo "lmao gottem"'
 
 alias v='command vim'
 
+alias r='command ranger'
+
 alias gr='command grep'
 
 alias f='command find'
