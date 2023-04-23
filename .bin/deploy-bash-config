@@ -4,12 +4,15 @@ gitDir="$HOME/gitRepos"
 bashDir="bash-config"
 bashGitDir="$gitDir/$bashDir"
 echo ">Moving to $bashGitDir"
-cd $bashGitDir || (echo ">Directory $bashGitDir does not exist. Exiting..." | exit 1)
+cd "$bashGitDir" || (echo ">Directory $bashGitDir does not exist. Exiting..." | exit 1)
 
 cp .bashrc "$HOME/.bashrc"
-cp -r .bin "$HOME/.bin"
-customThemeDir="$HOME/.oh-my-bash/custom/themes/"
-mkdir -p $customThemeDir
-cp -r '.oh-my-bash/custom/themes/' $customThemeDir
+echo ">Copied .bashrc to $HOME"
+cp -r .bin "$HOME/"
+echo ">Copied .bin to $HOME"
+customDir="$HOME/.oh-my-bash/custom"
+mkdir -p "$customDir"
+cp -r '.oh-my-bash/custom/themes' "$customDir"
+echo ">Copied custom themes to $HOME"
 
 
