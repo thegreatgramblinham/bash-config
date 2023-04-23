@@ -27,11 +27,12 @@ set colored-completion-prefix on
 # Alias Config
 # ============
 alias src='. ~/.bashrc'
-
 alias :q='exit'
 
+# ls Aliases
 alias la='ls -Al'
 
+# cd Aliases
 alias cdg='cd ~/gitRepos'
 alias cdwg='cd /mnt/c/gitRepos/'
 alias cddps='cd /mnt/c/gitRepos/monarch-data-prep-studio/'
@@ -42,14 +43,17 @@ alias cdb='cd ~/.bin'
 alias cdv='cd ~/.vim'
 alias cdeeznuts='echo "lmao gottem"'
 
+# Vim Aliases
 alias v='command vim'
 
+# Ranger Aliases
 alias r='command ranger'
 
+# Linux Tool Aliases
 alias gr='command grep'
-
 alias f='command find'
 
+# Git Aliases
 alias g='command git'
 alias ga='command git add'
 alias gb='command git branch'
@@ -93,6 +97,8 @@ case $- in
 esac
 
 # Path to your oh-my-bash installation.
+# NOTE: This seems to require an absolute path and will need to
+#       be replaced before use.
 export OSH='$HOME/.oh-my-bash'
 
 # Set name of the theme to load. Optionally, if you set this to "random"

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+gitDir="$HOME/gitRepos"
+bashDir="bash-config"
+bashGitDir="$gitDir/$bashDir"
+if [[ ! -d $bashGitDir ]]; then
+    echo ">Directory $bashGitDir does not exist. Exiting..." 
+    exit 1
+fi
+
+echo ">Moving to $HOME"
+cd $HOME
+
+cp .bashrc "$bashGitDir/.bashrc"
+echo ">Copied .bashrc to $bashGitDir"
+cp -r .bin "$bashGitDir/"
+echo ">Copied .bin to $bashGitDir"
+customThemeDir="$HOME/.oh-my-bash/custom/themes/"
+cp -r $customThemeDir "$bashGitDir/.oh-my-bash/custom/"
+echo ">Copied custom themes to $bashGitDir"
+
+

@@ -15,7 +15,7 @@ date=$(date '+%Y-%m-%d')
 backupImageName="$hostname-$date.img"
 backupSource="/dev/$1";
 backupTarget="$remoteBackupPath/$backupImageName"
-echo ">Beginning write of $backupSource to $backupTarget as $backupImageName"
+echo ">Beginning write of $backupSource to $remoteBackupPath as $backupImageName"
 #TODO source block size just in time with 'stat /dev/'?
 sudo dd bs=4096 if="$backupSource" of="$backupTarget" status=progress
 
