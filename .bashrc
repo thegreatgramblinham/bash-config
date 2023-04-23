@@ -78,9 +78,12 @@ alias gsa='command git stash'
 
 # fzf Config
 # ==========
-# Hook fzf functionality into bash
-source /usr/share/doc/fzf/examples/key-bindings.bash
-source /usr/share/doc/fzf/examples/completion.bash
+fzfExampleDir="/usr/share/doc/fzf/examples"
+if [[ -d "$fzfExampleDir" ]]; then
+    # Hook fzf functionality into bash
+    source "$fzfExampleDir/key-bindings.bash"
+    source "$fzfExampleDir/completion.bash"
+fi
 
 # Set the default command to include all files in the current
 # directory, excluding git files.
@@ -103,7 +106,7 @@ export OSH="$HOME/.oh-my-bash"
 
 # If oh-my-bash is not installed, silently quit and not execute
 # the rest of this script.
-if [[ ! -d "$OSH" ]]; then
+if [[ ! -e "$OSH/oh-my-bash.sh" ]]; then
     return
 fi
 
