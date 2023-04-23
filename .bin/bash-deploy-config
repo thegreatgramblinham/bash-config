@@ -15,4 +15,4 @@ mkdir -p "$customDir"
 cp -r '.oh-my-bash/custom/themes' "$customDir"
 echo ">Copied custom themes to $HOME"
 
-
+source "$HOME/.bashrc"

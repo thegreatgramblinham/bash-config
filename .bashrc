@@ -96,10 +96,16 @@ case $- in
     *) return;;
 esac
 
+
+
 # Path to your oh-my-bash installation.
-# NOTE: This seems to require an absolute path and will need to
-#       be replaced before use.
 export OSH="$HOME/.oh-my-bash"
+
+# If oh-my-bash is not installed, silently quit and not execute
+# the rest of this script.
+if [[ ! -d "$OSH" ]]; then
+    return
+fi
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-bash is loaded.
