@@ -7,7 +7,17 @@ if [[ $(mount | grep "$mntPath" | wc -l) -gt 0 ]]; then
 fi
 
 user="tggh-backups"
-backupPwd=$(pass show "Sam/Network/open-media-vault-lab/$user" | head -1)
+backupPwd=""
+if [[ -d "$HOME/.password-store" ]]; then
+    backupPwd=$(pass show "Sam/Network/open-media-vault-lab/$user" | head -1)
+else
+    if [[ -z "$1" ]]; then
+        echo ">No Pass installation and no password provided. Exiting..."
+        exit 1
+    else
+        backupPwd="$1"
+    fi
+fi
 
 nasHost="omv-nas"
 backupDir="backups"
