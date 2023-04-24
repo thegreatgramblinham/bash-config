@@ -16,6 +16,8 @@ set bell-style none
 set -o vi
 set keymap vi
 # Display a prompt to indicate what mode we are in
+# Note: These settings are not currently functional. Trying to
+# work on it, but they may conflict with oh-my-bash themes.
 set show-mode-in-prompt on
 set vi-cmd-mode-string '[C]'
 set vi-ins-mode-string '[I]'
@@ -31,17 +33,21 @@ alias :q='exit'
 
 # ls Aliases
 alias la='ls -Al'
+alias ll='ll -lah'
 
 # cd Aliases
 alias cdg='cd ~/gitRepos'
+alias cdbg='cd ~/gitRepos/bash-config'
+alias cdvg='cd ~/gitRepos/vim-config'
+alias cdb='cd ~/.bin'
+alias cdv='cd ~/.vim'
+alias cdeeznuts='echo "lmao gottem"'
+
 alias cdwg='cd /mnt/c/gitRepos/'
 alias cddps='cd /mnt/c/gitRepos/monarch-data-prep-studio/'
 alias cdmon='cd /mnt/c/gitRepos/monarch-classic/'
 alias cdplg='cd /mnt/c/gitRepos/monarch-dataprep/'
 alias cdcom='cd /mnt/c/gitRepos/monarch-desktop-common/'
-alias cdb='cd ~/.bin'
-alias cdv='cd ~/.vim'
-alias cdeeznuts='echo "lmao gottem"'
 
 # Vim Aliases
 alias v='command vim'
