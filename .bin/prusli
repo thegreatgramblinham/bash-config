@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
 #Launch PrusaSlicer from the git repo build
-cd ~/gitRepos/PrusaSlicer/build/src/
+prusaBuildDir="$HOME/gitRepos/PrusaSlicer/build/src/"
+
+if [[ ! -d "$prusaBuildDir" ]]; then
+    echo ">PrusaSlicer not complied on this machine. Exiting..."
+    exit 1
+fi
+
+cd $prusaBuildDir
 ./prusa-slicer
