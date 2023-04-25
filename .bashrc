@@ -79,7 +79,7 @@ alias gps='command git push'
 alias gpl='command git pull'
 alias gsh='command git show'
 alias gs='command git status'
-alias gsa='command git stash'
+alias gst='command git stash'
 
 
 # fzf Config
