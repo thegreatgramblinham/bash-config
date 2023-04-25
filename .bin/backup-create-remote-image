@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
 # Start by making sure our backup drive is mounted.
-mount-backup-drive
+backup-mount-remote-drive
+if [[ "$?" -ne 0 ]]; then
+    echo ">Failed to mount backup drive. Exiting..."
+    exit 1
+fi
 
 if [[ -z "$1" ]]; then
     echo ">No device name to image provided (e.g. 'sda'). Exiting..."

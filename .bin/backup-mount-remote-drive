@@ -3,13 +3,18 @@
 mntPath="/mnt/backups"
 if [[ $(mount | grep "$mntPath" | wc -l) -gt 0 ]]; then
     echo ">Drive already mounted in $mntPath. Skipping mount process..."
-    exit 1
+    exit 0
 fi
 
 user="tggh-backups"
 backupPwd=""
 if [[ -d "$HOME/.password-store" ]]; then
     backupPwd=$(pass show "Sam/Network/open-media-vault-lab/$user" | head -1)
+    #TODO this needs to be excuted in the pass run context, not here.
+    if [[ "$?" -ne 0 ]]; then
+        echo ">Failed to acquire master password. Exiting..."
+        exit 1
+    fi
 else
     if [[ -z "$1" ]]; then
         echo ">No Pass installation and no password provided. Exiting..."
