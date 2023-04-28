@@ -5,6 +5,9 @@
 export EDITOR=vim
 export VISUAL=vim
 
+# Set global git repo directory
+export GIT_REPO_DIR="$HOME/gitRepos"
+
 # Import our custom script directories into the path variable
 PATH=$PATH:$HOME/.bin
 #PATH=$PATH:$HOME/.bin/git

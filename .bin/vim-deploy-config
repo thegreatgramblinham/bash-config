@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+vimDir="vim-config"
+vimGitDir="$GIT_REPO_DIR/$vimDir"
+echo ">Moving to $vimGitDir"
+cd "$vimGitDir" || (echo ">Directory $vimGitDir does not exist. Exiting..." | exit 1)
+
+cp .vimrc "$HOME/.vimrc"
+echo ">Copied .vimrc to $HOME"
+cp -r .vim "$HOME/"
+echo ">Copied .vim to $HOME"

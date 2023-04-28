@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-gitDir="$HOME/gitRepos"
 bashDir="bash-config"
-bashGitDir="$gitDir/$bashDir"
+bashGitDir="$GIT_REPO_DIR/$bashDir"
 echo ">Moving to $bashGitDir"
 cd "$bashGitDir" || (echo ">Directory $bashGitDir does not exist. Exiting..." | exit 1)
 

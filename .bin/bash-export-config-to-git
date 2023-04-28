@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 
-gitDir="$HOME/gitRepos"
 bashDir="bash-config"
-bashGitDir="$gitDir/$bashDir"
+bashGitDir="$GIT_REPO_DIR/$bashDir"
 if [[ ! -d "$bashGitDir" ]]; then
     echo ">Directory "$bashGitDir" does not exist. Exiting..." 
     exit 1
 fi
 
 echo ">Moving to $HOME"
-cd $HOME
+cd $HOME || (echo ">Wtf do you mean there's no home dir..." | exit 1)
 
 cp .bashrc "$bashGitDir/.bashrc"
 echo ">Copied .bashrc to $bashGitDir"
