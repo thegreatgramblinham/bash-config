@@ -39,6 +39,9 @@ alias la='ls -Al'
 alias ll='ll -lah'
 
 # cd Aliases
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
 alias cdg='cd ~/gitRepos'
 alias cdbg='cd ~/gitRepos/bash-config'
 alias cdvg='cd ~/gitRepos/vim-config'

@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 
 vimDir="vim-config"
-vimGitDir="$GIT_REPO_DIR/$vimDir"
+if [[ -z "$GIT_REPO_DIR" ]]; then
+    # If our bashrc isn't setup, this variable might not exist.
+    vimGitDir="$HOME/$vimDir"
+else
+    vimGitDir="$GIT_REPO_DIR/$vimDir"
+fi
 echo ">Moving to $vimGitDir"
 cd "$vimGitDir" || (echo ">Directory $vimGitDir does not exist. Exiting..." | exit 1)
 
 echo ">Moving to $HOME"
-cd $HOME || (echo ">Wtf do you mean there's no home dir..." | exit 1)
+cd "$HOME" || (echo ">Wtf do you mean there's no home dir..." | exit 1)
 
 cp .vimrc "$vimGitDir/.vimrc"
 echo ">Copied .vimrc to $vimGitDir"

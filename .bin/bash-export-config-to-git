@@ -1,14 +1,19 @@
 #!/usr/bin/env bash
 
 bashDir="bash-config"
-bashGitDir="$GIT_REPO_DIR/$bashDir"
+if [[ -z "$GIT_REPO_DIR" ]]; then
+    # If our bashrc isn't setup, this variable might not exist.
+    bashGitDir="$HOME/$bashDir"
+else
+    bashGitDir="$GIT_REPO_DIR/$bashDir"
+fi
 if [[ ! -d "$bashGitDir" ]]; then
-    echo ">Directory "$bashGitDir" does not exist. Exiting..." 
+    echo ">Directory "$bashGitDir" does not exist. Exiting..."
     exit 1
 fi
 
 echo ">Moving to $HOME"
-cd $HOME || (echo ">Wtf do you mean there's no home dir..." | exit 1)
+cd "$HOME" || (echo ">Wtf do you mean there's no home dir..." | exit 1)
 
 cp .bashrc "$bashGitDir/.bashrc"
 echo ">Copied .bashrc to $bashGitDir"

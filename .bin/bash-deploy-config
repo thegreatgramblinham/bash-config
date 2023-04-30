@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
 bashDir="bash-config"
-bashGitDir="$GIT_REPO_DIR/$bashDir"
+if [[ -z "$GIT_REPO_DIR" ]]; then
+    # If our bashrc isn't setup, this variable might not exist.
+    bashGitDir="$HOME/$bashDir"
+else
+    bashGitDir="$GIT_REPO_DIR/$bashDir"
+fi
 echo ">Moving to $bashGitDir"
 cd "$bashGitDir" || (echo ">Directory $bashGitDir does not exist. Exiting..." | exit 1)
 
@@ -14,4 +19,4 @@ mkdir -p "$customDir"
 cp -r '.oh-my-bash/custom/themes' "$customDir"
 echo ">Copied custom themes to $HOME"
 
-source "$HOME/.bashrc"
+echo ">Please run 'src' to access the new config"
