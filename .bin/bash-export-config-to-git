@@ -15,6 +15,7 @@ fi
 echo ">Moving to $HOME"
 cd "$HOME" || (echo ">Wtf do you mean there's no home dir..." | exit 1)
 
+# Move all the local config to the git repo
 cp .bashrc "$bashGitDir/.bashrc"
 echo ">Copied .bashrc to $bashGitDir"
 cp -r .bin "$bashGitDir/"

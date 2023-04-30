@@ -13,6 +13,7 @@ cd "$vimGitDir" || (echo ">Directory $vimGitDir does not exist. Exiting..." | ex
 echo ">Moving to $HOME"
 cd "$HOME" || (echo ">Wtf do you mean there's no home dir..." | exit 1)
 
+# Move all the local config to the git repo
 cp .vimrc "$vimGitDir/.vimrc"
 echo ">Copied .vimrc to $vimGitDir"
 cp -r .vim "$vimGitDir/"

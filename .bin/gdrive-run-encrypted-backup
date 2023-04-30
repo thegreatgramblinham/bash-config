@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# This command is intended to be sourced.
+# This command is intended run on a machine with
+#  - rclone set up
+#  - an active sync directory (target specified in script)
+#  - a 'GDrive-Key' gpg key
+
+# TODO
+echo ">Not fully implemented. Exiting..."
+exit 1
+
+# Build an archive name with the directory and timestamp
+baseName=$(basename "$PWD")
+currentDate=$(date '+%Y-%m-%d')
+tarName="$baseName-$currentDate.tar.gpg"
+
+# Make an encrypted tar out of the current directory
+gpgtar --encrypt --output "$tarName" -r 'GDrive-Key' .
+    \|| (echo ">Creating gpgtar failed. Exiting..." | exit 1)
+
+# Move that tar to the directory syncing with Google Drive via rclone
+googleDriveSyncDir=""
+if [[ ! -d $googleDriveSyncDir ]]; then
+    echo ">Google Drive sync directory does not exist."
+    echo ">Cleaning up tar.gpg..."
+    rm $tarName
+    echo ">Exiting..."
+fi
+mv "./$tarName" "$googleDriveSyncDir/$tarName"
+
+# Run the sync operation on that directory to 'push' the changes

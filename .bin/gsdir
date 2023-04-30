@@ -1,5 +1,5 @@
-# This file should be sourced
 #!/usr/bin/env bash
+# This file should be sourced
 
 # This part is still a wip. Trying to make it so that
 # a lack of argument uses the calling directory.

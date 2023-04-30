@@ -60,6 +60,7 @@ alias v='command vim'
 
 # Ranger Aliases
 alias r='command ranger'
+alias sr='command sudo ranger'
 
 # Linux Tool Aliases
 alias gr='command grep'
@@ -101,6 +102,13 @@ fi
 # directory, excluding git files.
 # (Same as calling "<DEFAULT_COMMAND> | fzf")
 export FZF_DEFAULT_COMMAND="find . -not -path '**/.git/*'"
+
+# GPG Config
+# ==========
+# Added as per the recommendation of the gpg-agent man
+# NOTE: This is required for gpgtar to decrypt correctly.
+GPG_TTY=$(tty)
+export GPG_TTY
 
 
 # Oh-my-bash! Config
