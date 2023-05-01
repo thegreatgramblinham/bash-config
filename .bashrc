@@ -69,7 +69,7 @@ alias f='command find'
 # Git Aliases
 alias g='command git'
 alias ga='command git add'
-alias gb='command git branch'
+alias gb='command git branch -al'
 alias gpur='command git clean -x -d -f'
 alias gc='command git commit'
 alias gch='command git checkout'
