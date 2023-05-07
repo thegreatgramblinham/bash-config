@@ -10,13 +10,22 @@ fi
 echo ">Moving to $bashGitDir"
 cd "$bashGitDir" || (echo ">Directory $bashGitDir does not exist. Exiting..." | exit 1)
 
+ROOT="/root"
 cp .bashrc "$HOME/.bashrc"
 echo ">Copied .bashrc to $HOME"
+sudo cp .bashrc "$ROOT/.bashrc"
+echo ">Copied .bashrc to $ROOT"
 cp -r .bin "$HOME/"
 echo ">Copied .bin to $HOME"
+sudo cp -r .bin "$ROOT"
+echo ">Copied .bin to $ROOT"
 customDir="$HOME/.oh-my-bash/custom"
 mkdir -p "$customDir"
 cp -r '.oh-my-bash/custom/themes' "$customDir"
 echo ">Copied custom themes to $HOME"
+customRootDir="$ROOT/.oh-my-bash/custom"
+sudo mkdir -p "$customRootDir"
+sudo cp -r '.oh-my-bash/custom/themes' "$customRootDir"
+echo ">Copied custom themes to $ROOT"
 
 echo ">Please run 'src' to access the new config"

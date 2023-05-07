@@ -1,34 +1,7 @@
 #!/usr/bin/env bash
 
 mntPath="/mnt/backups"
-if [[ ! -d "$mntPath" ]]; then
-    echo ">Mount dir $mntPath doesn't exist, creating..."
-    mkdir $mntPath
-fi
-
-if [[ $(mount | grep "$mntPath" | wc -l) -gt 0 ]]; then
-    echo ">Drive already mounted in $mntPath. Skipping mount process..."
-    exit 0
-fi
-
 user="tggh-backups"
-if [[ -d "$HOME/.password-store" ]]; then
-    backupPwd=$(pass show "Sam/Network/open-media-vault-lab/$user" | head -1)
-    if [[ -z "$backupPwd" ]]; then
-        echo ">Failed to acquire master password. Exiting..."
-        exit 1
-    fi
-else
-    if [[ -z "$1" ]]; then
-        echo ">No Pass installation and no password provided as arg. Exiting..."
-        exit 1
-    else
-        backupPwd="$1"
-    fi
-fi
-
-nasHost="omv-nas"
 backupDir="backups"
-sudo mkdir -p "$mntPath"
-sudo mount -t cifs "//$nasHost/$backupDir" "$mntPath" -o username="$user",password="$backupPwd"
-echo ">Drive mounted at $mntPath."
+
+mount-remote-nas-drive -t "$backupDir" -m "$mntPath" -u "$user"

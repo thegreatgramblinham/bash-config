@@ -29,3 +29,6 @@ fi
 mv "./$tarName" "$googleDriveSyncDir/$tarName"
 
 # Run the sync operation on that directory to 'push' the changes
+cd $googleDriveSyncDir
+googleDriveRemoteName="gdrive-remote"
+rclone sync . "$googleDriveRemoteName":

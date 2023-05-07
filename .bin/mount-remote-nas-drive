@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+while getopts 't:m:u:p:' OPTION; do
+    case "$OPTION" in
+        t)
+            #Target NAS share
+            targetDir="$OPTARG"
+            ;;
+        m)
+            #Target mount directory
+            mntPath="$OPTARG"
+            ;;
+        u)
+            #Username
+            user="$OPTARG"
+            ;;
+        p)
+            #Password
+            password="$OPTARG"
+            ;;
+        ?)
+            echo "Invalid usage!"
+            echo "mount-remote-nas-drive [-t share_dir_target] [-m mount_location] [-u username] <-p password>"
+            exit 1;
+            ;;
+    esac
+done
+
+#Input checking.
+if [[ -z "$targetDir" ]]; then
+    echo ">Target NAS share blank. Exiting..."
+    exit 1
+fi
+
+if [[ -z "$mntPath" ]]; then
+    echo ">Target mount path blank. Exiting..."
+    exit 1
+fi
+
+if [[ -z "$user" ]]; then
+    echo ">Share username blank. Exiting..."
+    exit 1
+fi
+
+#Ensure we have a location to mount at.
+if [[ ! -d "$mntPath" ]]; then
+    echo ">Mount dir $mntPath doesn't exist, creating..."
+    sudo mkdir "$mntPath"
+fi
+
+if [[ $(mount | grep "$mntPath" | wc -l) -gt 0 ]]; then
+    echo ">Drive already mounted in $mntPath. Skipping mount process..."
+    exit 0
+fi
+
+if [[ -z "$password" ]]; then
+    #If a password has not been supplied, check to see if a local pass store exists.
+    if [[ -d "$HOME/.password-store" ]]; then
+        password=$((pass show "Sam/Network/open-media-vault-lab/$user" | head -1) || echo "Incorrect password. Exiting..."; exit 1)
+    else
+        echo ">No Pass installation and no password provided as arg. Exiting..."
+        exit 1
+    fi
+fi
+
+nasHost="omv-nas"
+sudo mkdir -p "$mntPath"
+sudo mount -t cifs "//$nasHost/$targetDir" "$mntPath" -o username="$user",password="$password"
+echo ">Drive mounted at $mntPath."
