@@ -28,4 +28,4 @@ sudo mkdir -p "$customRootDir"
 sudo cp -r '.oh-my-bash/custom/themes' "$customRootDir"
 echo ">Copied custom themes to $ROOT"
 
-echo ">Please run 'src' to access the new config"
+echo ">Please run 'src' or '. ~/.bashrc' to access the new config "
