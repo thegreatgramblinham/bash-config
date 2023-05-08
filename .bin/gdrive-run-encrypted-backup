@@ -1,34 +1,46 @@
 #!/usr/bin/env bash
-# This command is intended to be sourced.
 # This command is intended run on a machine with
-#  - rclone set up
-#  - an active sync directory (target specified in script)
+#  - rclone set up with a 'gdrive-remote' remote
 #  - a 'GDrive-Key' gpg key
 
-# TODO
-echo ">Not fully implemented. Exiting..."
-exit 1
+while getopts 't:' OPTION; do
+    case "$OPTION" in
+        t)
+            #Target directory
+            targetDir="$OPTARG"
+            ;;
+        ?)
+            echo "Invalid usage!"
+            echo "gdrive-run-encrypted-backup [-t target_directory_to_encrypt_and_sync]"
+            exit 1;
+            ;;
+    esac
+done
+
+if [[ ! -d "$targetDir" ]]; then
+    echo "Target directory to encrypt and upload doesn't exist. Exiting..."
+    exit 1
+fi
 
 # Build an archive name with the directory and timestamp
-baseName=$(basename "$PWD")
+baseName=$(basename "$targetDir")
 currentDate=$(date '+%Y-%m-%d')
 tarName="$baseName-$currentDate.tar.gpg"
 
-# Make an encrypted tar out of the current directory
-gpgtar --encrypt --output "$tarName" -r 'GDrive-Key' .
-    \|| (echo ">Creating gpgtar failed. Exiting..." | exit 1)
+# Make an encrypted tar out of the target directory
+gpgtar --encrypt --output "$targetDir/$tarName" -r 'GDrive-Key' "$targetDir"
+    \|| (echo ">Creating gpgtar failed. Exiting..."; exit 1)
 
 # Move that tar to the directory syncing with Google Drive via rclone
-googleDriveSyncDir=""
+googleDriveSyncDir="/mnt/gdrive-sync"
 if [[ ! -d $googleDriveSyncDir ]]; then
     echo ">Google Drive sync directory does not exist."
     echo ">Cleaning up tar.gpg..."
-    rm $tarName
+    rm "$tarName"
     echo ">Exiting..."
 fi
-mv "./$tarName" "$googleDriveSyncDir/$tarName"
+mv "$targetDir/$tarName" "$googleDriveSyncDir/$tarName"
 
 # Run the sync operation on that directory to 'push' the changes
-cd $googleDriveSyncDir
 googleDriveRemoteName="gdrive-remote"
-rclone sync . "$googleDriveRemoteName":
+rclone sync "$googleDriveSyncDir" "$googleDriveRemoteName":

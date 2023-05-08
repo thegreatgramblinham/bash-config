@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-while getopts 't:m:u:p:' OPTION; do
+while getopts 'p:' OPTION; do
     case "$OPTION" in
         p)
             #Password

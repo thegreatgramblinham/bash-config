@@ -8,15 +8,15 @@ while getopts 'p:' OPTION; do
             ;;
         ?)
             echo "Invalid usage!"
-            echo "gdrive-mount-remote-drive <-p password>"
+            echo "gdrive-sync-mount-remote-drive <-p password>"
             exit 1;
             ;;
     esac
 done
 
-mntPath="/mnt/gdrive"
+mntPath="/mnt/gdrive-sync"
 user="tggh-google-drive"
-googleDriveShare="gdrive"
+googleDriveShare="gdrive-sync"
 
 if [[ -z "$password" ]]; then
     mount-remote-nas-drive -t "$googleDriveShare" -m "$mntPath" -u "$user"
