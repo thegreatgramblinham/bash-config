@@ -30,7 +30,11 @@ tarName="$baseName-$currentDate.tar.gpg"
 
 # Make an encrypted tar out of the target directory
 gpgtar --encrypt --output "$tarName" -r 'GDrive-Key' "$targetDir"
-    \|| (echo ">Creating gpgtar failed. Exiting..."; exit 1)
+
+if [[ "$?" -ne 0 ]]; then
+    echo ">Creating gpgtar failed. Exiting..."
+    exit 1
+fi
 
 # Move that tar to the directory syncing with Google Drive via rclone
 googleDriveSyncDir="/mnt/gdrive-sync"
@@ -41,6 +45,11 @@ if [[ ! -d $googleDriveSyncDir ]]; then
     echo ">Exiting..."
 fi
 sudo mv "$targetDir/$tarName" "$googleDriveSyncDir/$tarName"
+
+if [[ ! -e "$googleDriveSyncDir/$tarName" ]]; then
+    echo ">$tarName could not be found in the target directoy. Aborting..."
+    exit 1
+fi
 
 # Run the sync operation on that directory to 'push' the changes
 googleDriveRemoteName="gdrive-remote"
