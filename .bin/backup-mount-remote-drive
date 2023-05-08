@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-mntPath="/mnt/backups"
-user="tggh-backups"
-backupDir="backups"
-
-
 while getopts 't:m:u:p:' OPTION; do
     case "$OPTION" in
         p)
@@ -18,6 +13,10 @@ while getopts 't:m:u:p:' OPTION; do
             ;;
     esac
 done
+
+mntPath="/mnt/backups"
+user="tggh-backups"
+backupDir="backups"
 
 if [[ -z "$password" ]]; then
     mount-remote-nas-drive -t "$backupDir" -m "$mntPath" -u "$user"

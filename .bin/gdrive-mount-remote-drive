@@ -1,6 +1,25 @@
 #!/usr/bin/env bash
 
+while getopts 't:m:u:p:' OPTION; do
+    case "$OPTION" in
+        p)
+            #Password
+            password="$OPTARG"
+            ;;
+        ?)
+            echo "Invalid usage!"
+            echo "gdrive-mount-remote-drive <-p password>"
+            exit 1;
+            ;;
+    esac
+done
+
 mntPath="/mnt/gdrive"
 user="tggh-google-drive"
 googleDriveShare="gdrive"
-mount-remote-nas-drive -t "$googleDriveShare" -m "$mntPath" -u "$user"
+
+if [[ -z "$password" ]]; then
+    mount-remote-nas-drive -t "$googleDriveShare" -m "$mntPath" -u "$user"
+else
+    mount-remote-nas-drive -t "$googleDriveShare" -m "$mntPath" -u "$user" -p "$password"
+fi
