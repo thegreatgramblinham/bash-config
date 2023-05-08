@@ -17,6 +17,7 @@ while getopts 't:' OPTION; do
     esac
 done
 
+
 if [[ ! -d "$targetDir" ]]; then
     echo "Target directory to encrypt and upload doesn't exist. Exiting..."
     exit 1
@@ -28,7 +29,7 @@ currentDate=$(date '+%Y-%m-%d')
 tarName="$baseName-$currentDate.tar.gpg"
 
 # Make an encrypted tar out of the target directory
-gpgtar --encrypt --output "$targetDir/$tarName" -r 'GDrive-Key' "$targetDir"
+gpgtar --encrypt --output "$tarName" -r 'GDrive-Key' "$targetDir"
     \|| (echo ">Creating gpgtar failed. Exiting..."; exit 1)
 
 # Move that tar to the directory syncing with Google Drive via rclone
@@ -39,7 +40,7 @@ if [[ ! -d $googleDriveSyncDir ]]; then
     rm "$tarName"
     echo ">Exiting..."
 fi
-mv "$targetDir/$tarName" "$googleDriveSyncDir/$tarName"
+sudo mv "$targetDir/$tarName" "$googleDriveSyncDir/$tarName"
 
 # Run the sync operation on that directory to 'push' the changes
 googleDriveRemoteName="gdrive-remote"
