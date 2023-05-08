@@ -15,6 +15,15 @@ PATH=$PATH:$HOME/.bin
 # Turn off all bells
 set bell-style none
 
+# Set a colored shell line as a default. This will be overruled by oh-my-bash if installed.
+color_prompt=yes
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \$\[\033[00m\] '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt
+
 # Enable vi keybindings
 set -o vi
 set keymap vi
