@@ -56,11 +56,13 @@ fi
 if [[ -z "$password" ]]; then
     #If a password has not been supplied, check to see if a local pass store exists.
     if [[ -d "$HOME/.password-store" ]]; then
-        password=$((pass show "Sam/Network/open-media-vault-lab/$user" | head -1) || echo "Incorrect password. Exiting..."; exit 1)
-    else
-        echo ">No Pass installation and no password provided as arg. Exiting..."
-        exit 1
+        password=$(pass show "Sam/Network/open-media-vault-lab/$user" | head -1)
     fi
+fi
+
+if [[ -z "$password" ]]; then
+    echo ">Unable to get password from pass installation and no password provided as arg. Exiting..."
+    exit 1
 fi
 
 nasHost="omv-nas"
