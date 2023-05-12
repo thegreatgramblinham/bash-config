@@ -129,7 +129,8 @@ case $- in
     *) return;;
 esac
 
-
+# Never speak to me or my son ever again (about updates)
+DISABLE_UPDATE_PROMPT=true
 
 # Path to your oh-my-bash installation.
 export OSH="$HOME/.oh-my-bash"
