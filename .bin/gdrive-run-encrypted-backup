@@ -32,8 +32,15 @@ baseName=$(basename "$targetDir")
 currentDate=$(date '+%Y-%m-%d')
 tarName="$baseName-$currentDate.tar.gpg"
 
+# If we are working with a directory that is not in our PWD, move there.
+# For whatever reason, gpgtar only works on directories in the PWD. Not paths.
+dirname=$(dirname "$targetDir")
+if [[ -z "$dirname" ]]
+    sudo cd "$dirname"
+fi
+
 # Make an encrypted tar out of the target directory
-gpgtar --encrypt --output "$tarName" -r 'GDrive-Key' "$targetDir"
+sudo gpgtar --encrypt --output "$tarName" -r 'GDrive-Key' "$baseName"
 
 if [[ "$?" -ne 0 ]]; then
     echo ">Creating gpgtar failed. Exiting..."
