@@ -35,7 +35,7 @@ tarName="$baseName-$currentDate.tar.gpg"
 # If we are working with a directory that is not in our PWD, move there.
 # For whatever reason, gpgtar only works on directories in the PWD. Not paths.
 dirname=$(dirname "$targetDir")
-if [[ -z "$dirname" ]]; then
+if [[ ! -z "$dirname" ]]; then
     cd "$dirname" || (echo ">Target directory does not exist. Exiting..."; exit 1)
     echo ">Moving to $dirname"
 fi
