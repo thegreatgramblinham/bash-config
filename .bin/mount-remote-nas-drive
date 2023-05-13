@@ -50,7 +50,7 @@ fi
 
 if mountpoint "$mntPath"; then
     echo ">Drive already mounted in $mntPath. Skipping mount process..."
-    exit 1
+    exit 0
 fi
 
 if [[ -z "$password" ]]; then
