@@ -35,14 +35,14 @@ tarName="$baseName-$currentDate.tar.gpg"
 # If we are working with a directory that is not in our PWD, move there.
 # For whatever reason, gpgtar only works on directories in the PWD. Not paths.
 dirname=$(dirname "$targetDir")
-if [[ -z "$dirname" ]]
-    sudo cd "$dirname"
+if [[ -z "$dirname" ]]; then
+    cd "$dirname" || (echo ">Target directory does not exist. Exiting..."; exit 1)
+    echo ">Moving to $dirname"
 fi
 
 # Make an encrypted tar out of the target directory
-sudo gpgtar --encrypt --output "$tarName" -r 'GDrive-Key' "$baseName"
-
-if [[ "$?" -ne 0 ]]; then
+echo ">Attmepting to build $tarName..."
+if sudo gpgtar --encrypt --output "$tarName" -r 'GDrive-Key' "$baseName"; then
     echo ">Creating gpgtar failed. Exiting..."
     exit 1
 fi
@@ -55,6 +55,7 @@ if [[ ! -d $googleDriveSyncDir ]]; then
     rm "$tarName"
     echo ">Exiting..."
 fi
+echo ">Moving to $tarName"
 sudo mv "$tarName" "$googleDriveSyncDir/$tarName"
 
 if [[ ! -e "$googleDriveSyncDir/$tarName" ]]; then
@@ -64,4 +65,6 @@ fi
 
 # Run the sync operation on that directory to 'push' the changes
 googleDriveRemoteName="gdrive-remote"
+echo ">Attempting to sync $googleDriveSyncDir to $googleDriveRemoteName..."
 rclone sync "$googleDriveSyncDir" "$googleDriveRemoteName":
+
