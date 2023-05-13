@@ -8,6 +8,10 @@ while getopts 't:' OPTION; do
         t)
             #Target directory
             targetDir="$OPTARG"
+            if [[ "." == "$targetDir" ]]; then
+                echo "Script cannot target the current directory. Please move up a directory level and enter the directory name."
+                exit 1
+            fi
             ;;
         ?)
             echo "Invalid usage!"
