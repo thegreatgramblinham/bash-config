@@ -48,9 +48,9 @@ if [[ ! -d "$mntPath" ]]; then
     sudo mkdir "$mntPath"
 fi
 
-if [[ $(mount | grep "$mntPath" | wc -l) -gt 0 ]]; then
+if mountpoint "$mntPath"; then
     echo ">Drive already mounted in $mntPath. Skipping mount process..."
-    exit 0
+    exit 1
 fi
 
 if [[ -z "$password" ]]; then
