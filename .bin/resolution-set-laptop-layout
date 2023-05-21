@@ -1,0 +1,23 @@
+#! /usr/bin/env bash
+
+echo ">This script is not functional yet"
+exit 1;
+
+# Use 'cvt horizontalpx verticalpx refreshrate' to construct the settings.
+horizontalpx=1920
+verticalpx=480
+refreshrate=60
+# call cvt, use grep to only pull out our modeline, ditch everything else.
+# This is what we will submit to xrandr to create our new mode.
+modeline=$(cvt "$horizontalpx" "$verticalpx" "$refreshrate" | grep -oP "(\".*)")
+modename=$(echo $modeline | grep -oP "(\".*\")")
+
+#TODO this isn't working now for some reason? Need to reboot and clear the config...
+if xrandr --newmode "$modeline"; then
+    echo ">New mode creation failed. Assuming we already have the mode created..."
+fi
+
+adapterName="HDMI-1"
+xrandr --addmode "$adapterName" "$modename"
+
+xrandr --output "$adapterName" --mode "$modename"

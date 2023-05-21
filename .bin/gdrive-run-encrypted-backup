@@ -40,6 +40,9 @@ if [[ ! -z "$dirname" ]]; then
     echo ">Moving to $dirname"
 fi
 
+# TODO this is not going to work due to the entire directory being loaded into
+# memory. So we will have to go through each file one by one.
+# TODO also that recursive encrypting code needs to be a separate script
 # Make an encrypted tar out of the target directory
 echo ">Attmepting to build $tarName..."
 if sudo gpgtar --encrypt --output "$tarName" -r 'GDrive-Key' "$baseName"; then

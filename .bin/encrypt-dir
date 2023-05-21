@@ -1,0 +1,81 @@
+#! /usr/bin/env bash
+
+while getopts 't:o:k:' OPTION; do
+    case "$OPTION" in
+        t)
+            # Directory to encrypt
+            targetDir="$OPTARG"
+            ;;
+        o)
+            # Directory to place the encrypted directory output
+            outputDir="$OPTARG"
+            ;;
+        k)
+            # gpg key identfier to use
+            keyId="$OPTARG"
+            ;;
+        ?)
+            echo "Invalid usage!"
+            echo "encrypt-dir [-t encryption_target_directory] [-o output_directory_location] [-k gpg_key_identifier]"
+            exit 1;
+            ;;
+    esac
+done
+
+# Check our input directory.
+if [[ -z "$targetDir" || ! -d "$targetDir" ]]; then
+    echo ">No encryption directory target defined or does not exist! Exiting..."
+    exit 1
+fi
+
+# Check our public key target.
+if [[ -z "$keyId" ]]; then
+    echo ">No public key name provided. Exiting..."
+    exit 1
+fi
+
+# Create our output directory.
+targetDirBaseName=$(basename "$targetDir")
+targetDirName=$(dirname "$targetDir")
+outputDirBaseName="$targetDirBaseName.dir.gpg"
+if [[ -z "$outputDir" || "$outputDir" == "." ]]; then
+    fullOutputDirPath="$outputDirBaseName"
+else
+    fullOutputDirPath="$targetDirName/$outputDirBaseName"
+fi
+
+if [[ -d "$fullOutputDirPath" ]]; then
+    echo ">Conflicting directory structure exists at $fullOutputDirPath. Opting not to overwrite or modify. Exiting..."
+    exit 1
+else
+    sudo mkdir "$fullOutputDirPath"
+fi
+
+# Iterate over the target directory and encrypt each file.
+find "$targetDir" -print0 | while IFS= read -r -d '' file
+do
+    baseName=$(basename "$file")
+    dirName=$(dirname "$file")
+    if [[ -d "$file" ]]; then
+        # We don't need to process the directories themselves.
+        echo ">Skipping $file as it is a directory..."
+        continue
+    fi
+
+    encryptedFileName="$baseName.gpg"
+    # Encrypt the file in the same directory
+    gpg --encrypt --output "$encryptedFileName" --recipient 'GDrive-Key' "$file"
+    # Move it to the new mirror directory.
+    if [[ -z "$dirName" || "$dirName" == "." ]]; then
+        fileOutputTarget="$outputDirBaseName/$encryptedFileName"
+        sudo mv "$encryptedFileName" "$fileOutputTarget"
+    else
+        sudo mkdir -p "$outputDirBaseName/$dirName"
+        fileOutputTarget="$outputDirBaseName/$dirName/$encryptedFileName"
+        sudo mv "$encryptedFileName" "$outputDirBaseName/$dirName/$encryptedFileName"
+    fi
+
+    echo ">Processed $file to $fileOutputTarget..."
+done
+
+echo ">Completed write to: $fullOutputDirPath"
