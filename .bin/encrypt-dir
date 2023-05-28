@@ -39,17 +39,18 @@ targetDirBaseName=$(basename "$targetDir")
 targetDirName=$(dirname "$targetDir")
 date=$(date '+%Y-%m-%d')
 outputDirBaseName="$targetDirBaseName.$date.dir.gpg"
+
 if [[ -z "$outputDir" || "$outputDir" == "." ]]; then
     fullOutputDirPath="$outputDirBaseName"
 else
-    fullOutputDirPath="$targetDirName/$outputDirBaseName"
+    fullOutputDirPath="$outputDir/$outputDirBaseName"
 fi
 
 if [[ -d "$fullOutputDirPath" ]]; then
     echo ">Conflicting directory structure exists at $fullOutputDirPath. Opting not to overwrite or modify. Exiting..."
     exit 1
 else
-    mkdir "$fullOutputDirPath"
+    mkdir -p "$fullOutputDirPath"
 fi
 
 # Iterate over the target directory and encrypt each file.
@@ -68,12 +69,12 @@ do
     gpg --encrypt --output "$encryptedFileName" --recipient 'GDrive-Key' "$file"
     # Move it to the new mirror directory.
     if [[ -z "$dirName" || "$dirName" == "." ]]; then
-        fileOutputTarget="$outputDirBaseName/$encryptedFileName"
+        fileOutputTarget="$fullOutputDirPath/$encryptedFileName"
         mv "$encryptedFileName" "$fileOutputTarget"
     else
-        mkdir -p "$outputDirBaseName/$dirName"
-        fileOutputTarget="$outputDirBaseName/$dirName/$encryptedFileName"
-        mv "$encryptedFileName" "$outputDirBaseName/$dirName/$encryptedFileName"
+        mkdir -p "$fullOutputDirPath/$dirName"
+        fileOutputTarget="$fullOutputDirPath/$dirName/$encryptedFileName"
+        mv "$encryptedFileName" "$fullOutputDirPath/$dirName/$encryptedFileName"
     fi
 
     echo ">Processed $file to $fileOutputTarget..."
