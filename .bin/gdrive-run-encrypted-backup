@@ -3,63 +3,20 @@
 #  - rclone set up with a 'gdrive-remote' remote
 #  - a 'GDrive-Key' gpg key
 
-while getopts 't:' OPTION; do
-    case "$OPTION" in
-        t)
-            #Target directory
-            targetDir="$OPTARG"
-            ;;
-        ?)
-            echo "Invalid usage!"
-            echo "gdrive-run-encrypted-backup [-t target_directory_to_encrypt_and_sync]"
-            exit 1;
-            ;;
-    esac
-done
-
-
-if [[ ! -d "$targetDir" ]]; then
-    echo "Target directory to encrypt and upload doesn't exist. Exiting..."
-    exit 1
-fi
-
-## Build an archive name with the directory and timestamp
-#baseName=$(basename "$targetDir")
-#currentDate=$(date '+%Y-%m-%d')
-#tarName="$baseName-$currentDate.tar.gpg"
-#
-## If we are working with a directory that is not in our PWD, move there.
-## For whatever reason, gpgtar only works on directories in the PWD. Not paths.
-#dirname=$(dirname "$targetDir")
-#if [[ ! -z "$dirname" ]]; then
-#    cd "$dirname" || (echo ">Target directory does not exist. Exiting..."; exit 1)
-#    echo ">Moving to $dirname"
-#fi
-#
-## TODO this is not going to work due to the entire directory being loaded into
-## memory. So we will have to go through each file one by one.
-## TODO also that recursive encrypting code needs to be a separate script
-## Make an encrypted tar out of the target directory
-#echo ">Attmepting to build $tarName..."
-#if sudo gpgtar --encrypt --output "$tarName" -r 'GDrive-Key' "$baseName"; then
-#    echo ">Creating gpgtar failed. Exiting..."
-#    exit 1
-#fi
-
-
-# Move that tar to the directory syncing with Google Drive via rclone
+# Mount google drive share
+googleDriveDir="/mnt/gdrive"
+gdrive-mount-remote-drive
+# Mount sync drive share
 googleDriveSyncDir="/mnt/gdrive-sync"
-if [[ ! -d $googleDriveSyncDir ]]; then
-    echo ">Google Drive sync directory does not exist."
-    echo ">Cleaning up tar.gpg..."
-    rm "$tarName"
-    echo ">Exiting..."
-fi
-echo ">Moving to $tarName"
-mv "$tarName" "$googleDriveSyncDir/$tarName"
+gdrive-sync-mount-remote-drive
+# Delete contents of sync drive share
+cd "$googleDriveSyncDir" && sudo rm -r .
 
-if [[ ! -e "$googleDriveSyncDir/$tarName" ]]; then
-    echo ">$tarName could not be found in the target directoy. Aborting..."
+# Encrypt to drive share to sync share
+cd "$googleDriveDir" || (echo ">Could not access google drive share directory. Exiting..." | exit 1)
+folderTarget="google-drive"
+if encrypt-dir -t "$folderTarget" -o "$googleDriveSyncDir" -k 'GDrive-Key'; then
+    echo ">Directory encryption failed. Exiting..."
     exit 1
 fi
 
