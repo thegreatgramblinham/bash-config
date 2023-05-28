@@ -42,7 +42,7 @@ if [[ -z "$user" ]]; then
     exit 1
 fi
 
-#Ensure we have a location to mount at.
+# Ensure we have a location to mount at.
 if [[ ! -d "$mntPath" ]]; then
     echo ">Mount dir $mntPath doesn't exist, creating..."
     sudo mkdir "$mntPath"
@@ -54,7 +54,7 @@ if mountpoint "$mntPath"; then
 fi
 
 if [[ -z "$password" ]]; then
-    #If a password has not been supplied, check to see if a local pass store exists.
+    # If a password has not been supplied, check to see if a local pass store exists.
     if [[ -d "$HOME/.password-store" ]]; then
         password=$(pass show "Sam/Network/open-media-vault-lab/$user" | head -1)
     fi

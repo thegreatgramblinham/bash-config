@@ -1,0 +1,102 @@
+#! /usr/bin/env bash
+
+while getopts 't:k:' OPTION; do
+    case "$OPTION" in
+        t)
+            # Directory to encrypt
+            targetDir="$OPTARG"
+            ;;
+        k)
+            # gpg key identfier to use
+            keyId="$OPTARG"
+            ;;
+        ?)
+            echo "Invalid usage!"
+            echo "decrypt-dir [-t decryption_target_directory] [-k gpg_key_identifier]"
+            exit 1;
+            ;;
+    esac
+done
+
+# Check our input directory.
+if [[ -z "$targetDir" || ! -d "$targetDir" ]]; then
+    echo ">No decryption directory target defined or does not exist! Exiting..."
+    exit 1
+fi
+
+# Reject if the directory is not in the expected form
+encryptedDirectoryExtension="${targetDir#*.}"
+if [[ "$encryptedDirectoryExtension" != *.dir.gpg ]]; then
+    echo ">Target directory does not have the expected extension. Exiting..."
+    exit 1
+fi
+
+# Check our public key target.
+if [[ -z "$keyId" ]]; then
+    echo ">No public key name provided. Exiting..."
+    exit 1
+fi
+
+# "Extract" the encrypted contents creating the output at the same directory as our target.
+
+# Take the target and get the first part of the directory name.
+outputDirName=$(echo "$targetDir" | cut -d'.' -f 1)
+
+# Try to build the directory where we will place our decrypted contents
+fullOutputDirPath="$PWD/$outputDirName"
+if [[ -d "$fullOutputDirPath" ]]; then
+    echo ">Conflicting directory structure exists at $fullOutputDirPath. Opting not to overwrite or modify. Exiting..."
+    exit 1
+else
+    mkdir "$fullOutputDirPath"
+fi
+
+# Get the password for the key supplied in the args
+if [[ -d "$HOME/.password-store" ]]; then
+    gpgKeyPassword=$(pass show "Sam/Gpg-Keys/$keyId" | head -1)
+fi
+
+if [[ -z "$gpgKeyPassword" ]]; then
+    echo ">Unable to get password from pass installation. Exiting..."
+    exit 1
+fi
+
+# Begin iterating over the files in the target directory and decrypting them.
+#cd "$targetDir" || (echo ">Somehow the target directory is gone..." && exit 1)
+find "$targetDir"/* -print0 | while IFS= read -r -d '' file
+do
+    baseName=$(basename "$file")
+    dirName=$(dirname "$file")
+    if [[ -d "$file" ]]; then
+        # We don't need to process the directories themselves.
+        echo ">Skipping $file as it is a directory..."
+        echo "-----"
+        continue
+    fi
+
+    if [[ "$file" != *.gpg ]]; then
+        echo ">Skipping $file as it does not have a '.gpg' extension..."
+        echo "-----"
+        continue
+    fi
+
+    # Remove the gpg extension.
+    decryptedFileName="${baseName%.*}"
+
+    # Define our output location
+    decryptedDirectoryPath="${dirName#*/}"
+    decryptedFilePath="$decryptedDirectoryPath/$decryptedFileName"
+
+    ## Decrypt
+    echo ">Decrypting $decryptedFileName..."
+    gpg --decrypt --batch --yes --pinentry-mode loopback --passphrase="$gpgKeyPassword" --output "$decryptedFileName" "$file"
+
+    # Move the file to the expected location.
+    mkdir -p "$decryptedDirectoryPath"
+    mv "$decryptedFileName" "$decryptedFilePath"
+    echo ">Decrypted $decryptedFileName to $decryptedFilePath..."
+    echo "-----"
+done
+
+echo ">Completed decryption to $fullOutputDirPath"
+
