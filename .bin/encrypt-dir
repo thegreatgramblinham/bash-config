@@ -50,7 +50,7 @@ if [[ -d "$fullOutputDirPath" ]]; then
     echo ">Conflicting directory structure exists at $fullOutputDirPath. Opting not to overwrite or modify. Exiting..."
     exit 1
 else
-    mkdir -p "$fullOutputDirPath"
+    sudo mkdir -p "$fullOutputDirPath"
 fi
 
 # Iterate over the target directory and encrypt each file.
@@ -61,23 +61,27 @@ do
     if [[ -d "$file" ]]; then
         # We don't need to process the directories themselves.
         echo ">Skipping $file as it is a directory..."
+        echo "------"
         continue
     fi
 
     encryptedFileName="$baseName.gpg"
     # Encrypt the file in the same directory
-    gpg --encrypt --output "$encryptedFileName" --recipient 'GDrive-Key' "$file"
+    # NOTE: Any 'key not found errors' here are likely because the root user doesn't have the
+    # key in their keyring.
+    sudo gpg --encrypt --output "$encryptedFileName" --recipient 'GDrive-Key' "$file"
     # Move it to the new mirror directory.
     if [[ -z "$dirName" || "$dirName" == "." ]]; then
         fileOutputTarget="$fullOutputDirPath/$encryptedFileName"
-        mv "$encryptedFileName" "$fileOutputTarget"
+        sudo mv "$encryptedFileName" "$fileOutputTarget"
     else
-        mkdir -p "$fullOutputDirPath/$dirName"
+        sudo mkdir -p "$fullOutputDirPath/$dirName"
         fileOutputTarget="$fullOutputDirPath/$dirName/$encryptedFileName"
-        mv "$encryptedFileName" "$fullOutputDirPath/$dirName/$encryptedFileName"
+        sudo mv "$encryptedFileName" "$fullOutputDirPath/$dirName/$encryptedFileName"
     fi
 
     echo ">Processed $file to $fileOutputTarget..."
+    echo "------"
 done
 
 echo ">Completed write to: $fullOutputDirPath"

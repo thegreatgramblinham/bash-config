@@ -8,10 +8,6 @@ while getopts 't:' OPTION; do
         t)
             #Target directory
             targetDir="$OPTARG"
-            if [[ "." == "$targetDir" ]]; then
-                echo "Script cannot target the current directory. Please move up a directory level and enter the directory name."
-                exit 1
-            fi
             ;;
         ?)
             echo "Invalid usage!"
@@ -27,28 +23,29 @@ if [[ ! -d "$targetDir" ]]; then
     exit 1
 fi
 
-# Build an archive name with the directory and timestamp
-baseName=$(basename "$targetDir")
-currentDate=$(date '+%Y-%m-%d')
-tarName="$baseName-$currentDate.tar.gpg"
+## Build an archive name with the directory and timestamp
+#baseName=$(basename "$targetDir")
+#currentDate=$(date '+%Y-%m-%d')
+#tarName="$baseName-$currentDate.tar.gpg"
+#
+## If we are working with a directory that is not in our PWD, move there.
+## For whatever reason, gpgtar only works on directories in the PWD. Not paths.
+#dirname=$(dirname "$targetDir")
+#if [[ ! -z "$dirname" ]]; then
+#    cd "$dirname" || (echo ">Target directory does not exist. Exiting..."; exit 1)
+#    echo ">Moving to $dirname"
+#fi
+#
+## TODO this is not going to work due to the entire directory being loaded into
+## memory. So we will have to go through each file one by one.
+## TODO also that recursive encrypting code needs to be a separate script
+## Make an encrypted tar out of the target directory
+#echo ">Attmepting to build $tarName..."
+#if sudo gpgtar --encrypt --output "$tarName" -r 'GDrive-Key' "$baseName"; then
+#    echo ">Creating gpgtar failed. Exiting..."
+#    exit 1
+#fi
 
-# If we are working with a directory that is not in our PWD, move there.
-# For whatever reason, gpgtar only works on directories in the PWD. Not paths.
-dirname=$(dirname "$targetDir")
-if [[ ! -z "$dirname" ]]; then
-    cd "$dirname" || (echo ">Target directory does not exist. Exiting..."; exit 1)
-    echo ">Moving to $dirname"
-fi
-
-# TODO this is not going to work due to the entire directory being loaded into
-# memory. So we will have to go through each file one by one.
-# TODO also that recursive encrypting code needs to be a separate script
-# Make an encrypted tar out of the target directory
-echo ">Attmepting to build $tarName..."
-if sudo gpgtar --encrypt --output "$tarName" -r 'GDrive-Key' "$baseName"; then
-    echo ">Creating gpgtar failed. Exiting..."
-    exit 1
-fi
 
 # Move that tar to the directory syncing with Google Drive via rclone
 googleDriveSyncDir="/mnt/gdrive-sync"
@@ -59,7 +56,7 @@ if [[ ! -d $googleDriveSyncDir ]]; then
     echo ">Exiting..."
 fi
 echo ">Moving to $tarName"
-sudo mv "$tarName" "$googleDriveSyncDir/$tarName"
+mv "$tarName" "$googleDriveSyncDir/$tarName"
 
 if [[ ! -e "$googleDriveSyncDir/$tarName" ]]; then
     echo ">$tarName could not be found in the target directoy. Aborting..."

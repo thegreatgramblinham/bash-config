@@ -48,7 +48,7 @@ if [[ -d "$fullOutputDirPath" ]]; then
     echo ">Conflicting directory structure exists at $fullOutputDirPath. Opting not to overwrite or modify. Exiting..."
     exit 1
 else
-    mkdir "$fullOutputDirPath"
+    sudo mkdir "$fullOutputDirPath"
 fi
 
 # Get the password for the key supplied in the args
@@ -89,11 +89,13 @@ do
 
     ## Decrypt
     echo ">Decrypting $decryptedFileName..."
-    gpg --decrypt --batch --yes --pinentry-mode loopback --passphrase="$gpgKeyPassword" --output "$decryptedFileName" "$file"
+    # NOTE: Any 'key not found errors' here are likely because the root user doesn't have the
+    # key in their keyring.
+    sudo gpg --decrypt --batch --yes --pinentry-mode loopback --passphrase="$gpgKeyPassword" --output "$decryptedFileName" "$file"
 
     # Move the file to the expected location.
-    mkdir -p "$decryptedDirectoryPath"
-    mv "$decryptedFileName" "$decryptedFilePath"
+    sudo mkdir -p "$decryptedDirectoryPath"
+    sudo mv "$decryptedFileName" "$decryptedFilePath"
     echo ">Decrypted $decryptedFileName to $decryptedFilePath..."
     echo "-----"
 done
