@@ -9,13 +9,15 @@ gdrive-mount-remote-drive
 # Mount sync drive share
 googleDriveSyncDir="/mnt/gdrive-sync"
 gdrive-sync-mount-remote-drive
-# Delete contents of sync drive share
-cd "$googleDriveSyncDir" && sudo rm -r .
+# Delete encrypted directory contents of sync drive share
+cd "$googleDriveSyncDir" && sudo rm -r *.dir.gpg
 
 # Encrypt to drive share to sync share
 cd "$googleDriveDir" || (echo ">Could not access google drive share directory. Exiting..." | exit 1)
 folderTarget="google-drive"
 if encrypt-dir -t "$folderTarget" -o "$googleDriveSyncDir" -k 'GDrive-Key'; then
+    echo ">Directory encryption to $googleDriveSyncDir success!"
+else
     echo ">Directory encryption failed. Exiting..."
     exit 1
 fi
@@ -23,5 +25,6 @@ fi
 # Run the sync operation on that directory to 'push' the changes
 googleDriveRemoteName="gdrive-remote"
 echo ">Attempting to sync $googleDriveSyncDir to $googleDriveRemoteName..."
-rclone sync "$googleDriveSyncDir" "$googleDriveRemoteName":
+rclone -vv sync "$googleDriveSyncDir" "$googleDriveRemoteName":
+echo ">[COMPLETED] Finished sync operation!"
 
