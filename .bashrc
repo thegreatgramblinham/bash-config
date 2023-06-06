@@ -5,7 +5,7 @@
 export EDITOR=vim
 export VISUAL=vim
 
-# Set global git repo directory
+# Set global git repo directory variable
 export GIT_REPO_DIR="$HOME/gitRepos"
 
 # Import our custom script directories into the path variable
@@ -45,12 +45,14 @@ alias :q='exit'
 
 # ls Aliases
 alias la='ls -Al'
-alias ll='ll -lah'
+alias ll='ls -lah'
 
 # cd Aliases
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
 alias cdg='cd ~/gitRepos'
 alias cdbg='cd ~/gitRepos/bash-config'
 alias cdvg='cd ~/gitRepos/vim-config'
@@ -78,7 +80,8 @@ alias f='command find'
 # Git Aliases
 alias g='command git'
 alias ga='command git add'
-alias gb='command git branch -al'
+alias gb='command git branch'
+alias gba='command git branch -al'
 alias gc='command git commit'
 alias gch='command git checkout'
 alias gd='command git diff'
