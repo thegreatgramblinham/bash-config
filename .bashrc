@@ -135,6 +135,10 @@ esac
 # Never speak to me or my son ever again (about updates)
 DISABLE_UPDATE_PROMPT=true
 
+# Do not update without consent.
+# When upgrading is desired, use the command: 'upgrade_oh_my_bash'
+DISABLE_AUTO_UPDATE=true
+
 # Path to your oh-my-bash installation.
 export OSH="$HOME/.oh-my-bash"
 
