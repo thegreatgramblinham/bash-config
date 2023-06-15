@@ -44,7 +44,8 @@ alias src='. ~/.bashrc'
 alias :q='exit'
 
 # ls Aliases
-alias la='ls -Al'
+alias la='ls -lah'
+# TODO due to other settings this one is not applying..
 alias ll='ls -lah'
 
 # cd Aliases
@@ -95,7 +96,7 @@ alias gir='command git rebase -i'
 alias gl='command git log'
 alias glfp='command git log --first-parent'
 alias glg='command git log --graph --oneline --all'
-alias gll='command git log --no-merges --first-parent --pretty="format:%C(dim green) %<(9,trunc)%ar %C(bold magenta)%h %C(bold green)%<(12,trunc)%an %C(bold yellow)%s"'
+alias gll='command git log --first-parent --pretty="format:%C(dim green) %<(9,trunc)%ar %C(bold magenta)%h %C(bold green)%<(12,trunc)%an %C(bold yellow)%s"'
 alias gm='command git merge'
 alias gmt='command git mergetool'
 alias gpl='command git pull'
@@ -228,7 +229,7 @@ completions=(
 # Example format: aliases=(vagrant composer git-avh)
 # Add wisely, as too many aliases slow down shell startup.
 aliases=(
-  ls
+  #ls
   #chmod
   #general
 )
