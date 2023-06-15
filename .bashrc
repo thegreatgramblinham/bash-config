@@ -44,9 +44,8 @@ alias src='. ~/.bashrc'
 alias :q='exit'
 
 # ls Aliases
-alias la='ls -lah'
-# TODO due to other settings this one is not applying..
-alias ll='ls -lah'
+alias la='ls -laFh'
+alias ll='ls -laFh'
 
 # cd Aliases
 alias ..='cd ..'
@@ -201,7 +200,7 @@ OSH_THEME="powerline-multiline"
 
 # Uncomment the following line if you do not want OMB to overwrite the existing
 # aliases by the default OMB aliases defined in lib/*.sh
-# OMB_DEFAULT_ALIASES="check"
+OMB_DEFAULT_ALIASES="check"
 
 # Would you like to use another custom folder than $OSH/custom?
 # OSH_CUSTOM=/path/to/new-custom-folder
