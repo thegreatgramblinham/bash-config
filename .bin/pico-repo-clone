@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# This script is meant to be sourced
+
+if [[ ! -d "$PWD/pico-sdk" ]]; then
+    git clone https://github.com/raspberrypi/pico-sdk.git
+else
+    echo ">Skipping pico-sdk because the directory already exists...";
+fi
+
+if [[ ! -d "$PWD/pico-examples" ]]; then
+    git clone https://github.com/raspberrypi/pico-examples.git
+else
+    echo ">Skipping pico-examples because the directory already exists...";
+fi
+
+if [[ ! -d "$PWD/picoprobe" ]]; then
+    git clone https://github.com/raspberrypi/picoprobe.git
+else
+    echo ">Skipping picoprobe because the directory already exists...";
+fi
+
+if [[ ! -d "$PWD/picotool" ]]; then
+    git clone https://github.com/raspberrypi/picotool.git
+else
+    echo ">Skipping picotool because the directory already exists...";
+fi
+
+if [[ ! -d "$PWD/pico-project-generator" ]]; then
+    git clone https://github.com/raspberrypi/pico-project-generator.git
+else
+    echo ">Skipping pico-project-generator because the directory already exists...";
+fi
+
+if [[ ! -d "$PWD/tinyusb" ]]; then
+    git clone https://github.com/hathach/tinyusb.git
+else
+    echo ">Skipping tinyusb because the directory already exists...";
+fi
+
+echo ">Completed pico/usb repo downloads!";
