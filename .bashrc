@@ -45,8 +45,8 @@ alias src='. ~/.bashrc'
 alias :q='exit'
 
 # ls Aliases
-alias la='ls -laFh'
-alias ll='ls -laFh'
+alias la='ls -Al'
+alias ll='ls -lah'
 
 # cd Aliases
 alias ..='cd ..'
@@ -77,10 +77,12 @@ alias sr='command sudo ranger'
 # Linux Tool Aliases
 alias gr='command grep'
 alias f='command find'
+alias ds='command du -h --max-depth=1 .'
 
 # Git Aliases
 alias g='command git'
 alias ga='command git add'
+alias gaa='command git add .'
 alias gb='command git branch'
 alias gba='command git branch -al'
 alias gbd='command git branch -D'
@@ -94,9 +96,7 @@ alias gf='command git fetch --prune'
 alias gh='command git log -p -- '
 alias gir='command git rebase -i'
 alias gl='command git log'
-alias glfp='command git log --first-parent'
 alias glg='command git log --graph --oneline --all'
-alias gll='command git log --first-parent --pretty="format:%C(dim green) %<(9,trunc)%ar %C(bold magenta)%h %C(bold green)%<(12,trunc)%an %C(bold yellow)%s"'
 alias gm='command git merge'
 alias gmt='command git mergetool'
 alias gpl='command git pull'
@@ -201,7 +201,7 @@ OSH_THEME="powerline-multiline"
 
 # Uncomment the following line if you do not want OMB to overwrite the existing
 # aliases by the default OMB aliases defined in lib/*.sh
-OMB_DEFAULT_ALIASES="check"
+# OMB_DEFAULT_ALIASES="check"
 
 # Would you like to use another custom folder than $OSH/custom?
 # OSH_CUSTOM=/path/to/new-custom-folder
@@ -229,7 +229,7 @@ completions=(
 # Example format: aliases=(vagrant composer git-avh)
 # Add wisely, as too many aliases slow down shell startup.
 aliases=(
-  #ls
+  ls
   #chmod
   #general
 )
