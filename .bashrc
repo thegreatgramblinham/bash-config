@@ -78,6 +78,7 @@ alias sr='command sudo ranger'
 alias gr='command grep'
 alias f='command find'
 alias ds='command du -h --max-depth=1 .'
+alias t='command touch'
 
 # Git Aliases
 alias g='command git'
