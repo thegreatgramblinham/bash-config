@@ -7,6 +7,7 @@ export VISUAL=vim
 
 # Set global git repo directory variable
 export GIT_REPO_DIR="$HOME/gitRepos"
+export PICO_SDK_PATH="$GIT_REPO_DIR/pico-sdk"
 
 # Import our custom script directories into the path variable
 PATH=$PATH:$HOME/.bin
