@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+defaultSerialDev="/dev/ttyACM1"
+if [[ -z "$1" ]]; then
+    echo ">No serial target specified. Defaulting to $defaultSerialDev"
+    targetDev="$defaultSerialDev"
+else
+    targetDev="$1"
+fi
+
+minicom -b 115200 -o -D "$targetDev"
+
+
