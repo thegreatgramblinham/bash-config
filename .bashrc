@@ -119,6 +119,8 @@ alias gsh='command git show'
 alias gs='command git status'
 alias gst='command git stash'
 alias gstd='command git stash drop'
+alias gstl='command git stash list'
+alias gsts='command git stash show -p'
 
 
 # fzf Config
