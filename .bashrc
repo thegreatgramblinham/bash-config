@@ -43,6 +43,8 @@ set colored-completion-prefix on
 # ============
 alias src='. ~/.bashrc'
 alias :q='exit'
+alias :Q='exit'
+alias Q='exit'
 
 # ls Aliases
 alias la='ls -lah'
@@ -116,6 +118,7 @@ alias grsp='command git restore --staged -p'
 alias gsh='command git show'
 alias gs='command git status'
 alias gst='command git stash'
+alias gstd='command git stash drop'
 
 
 # fzf Config
