@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+if [[ -z "$1" ]]; then
+    echo ">No file argument provided. Exiting..."
+    exit 1;
+fi
+
+if [[ -e "$1" ]]; then
+    echo ">File already exists. Exiting..."
+    exit 1;
+fi
+
+if ! touch "$1"; then
+    echo ">Failed to create file. Exiting..."
+    exit 1;
+fi
+
+vim "$1"
