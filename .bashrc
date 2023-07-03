@@ -46,6 +46,9 @@ alias :q='exit'
 alias :Q='exit'
 alias Q='exit'
 
+alias shutd='command sudo shutdown now'
+alias sx='command startx'
+
 # ls Aliases
 alias la='ls -lah'
 alias ll='ls -lah'
@@ -71,6 +74,7 @@ alias cdcom='cd /mnt/c/gitRepos/monarch-desktop-common/'
 
 # Vim Aliases
 alias v='command vim'
+alias vd='command vimdiff'
 
 # Ranger Aliases
 alias r='command ranger'
