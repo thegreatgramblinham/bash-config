@@ -1,5 +1,19 @@
 # This file should be sourced
 #!/usr/bin/env bash
 
-mkdir "$1"
+if [[ -z "$1" ]]; then
+    echo ">No directory argument provided. Exiting..."
+    exit 1;
+fi
+
+if [[ -d "$1" ]]; then
+    echo ">Directory already exists. Exiting..."
+    exit 1;
+fi
+
+if ! mkdir "$1"; then
+    echo ">Failed to directory file. Exiting..."
+    exit 1;
+fi
+
 cd "$1"
