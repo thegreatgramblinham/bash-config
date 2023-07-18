@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+i=0
+if [[ -z "$1" ]]; then
+    # We have no index parameter
+    echo "[Local/Remote Branches for:]"
+    git remote -v
+    echo "==="
+    git branch -a --color=always | while read -r branchLine; do
+        echo -e "$i:\t$branchLine"
+        ((i++))
+    done | column -t -s $'\t'
+else
+    git branch -a | while read -r branchLine; do
+        if [[ "$1" == "$i" ]]; then
+            if [[ "$branchLine" == remotes/origin/* ]]; then
+                # Chop off the remote prefix, take the rest of the name.
+                echo $(echo "$branchLine" | cut -d'/' -f 3,4)
+            elif [[ "$branchLine" == \** ]]; then
+                # Chop off the astrisk prefix if it's the current branch name.
+                echo $(echo "$branchLine" | cut -d' ' -f 2)
+            else
+                echo "$branchLine"
+            fi
+        fi
+        ((i++))
+    done
+fi
