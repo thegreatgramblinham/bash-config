@@ -1,5 +1,5 @@
-# This file should be sourced
 #!/usr/bin/env bash
+# This file should be sourced
 
 if [[ -z "$1" ]]; then
     echo ">No directory argument provided. Exiting..."

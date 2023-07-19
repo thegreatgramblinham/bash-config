@@ -51,7 +51,9 @@ alias sx='command startx'
 
 # ls Aliases
 alias la='ls -lah'
+alias lal='ls --color=always -lah | less'
 alias ll='ls -lah'
+alias lll='ls --color=always -lah | less'
 
 # cd Aliases
 alias ..='cd ..'
@@ -81,10 +83,17 @@ alias r='command ranger'
 alias sr='command sudo ranger'
 
 # Linux Tool Aliases
-alias ep='command grep'
 alias f='command find'
 alias ds='command du -h --max-depth=1 .'
-alias t='command touch'
+alias to='command touch'
+
+# Tmux Aliases
+alias t='command tmux'
+alias ta='command tmux attach'
+alias tat='command tmux attach -t'
+alias tk='command tmux kill-session -t'
+alias tl='command tmux ls'
+alias tn='command tmux new -s'
 
 # Git Aliases
 alias g='command git'
