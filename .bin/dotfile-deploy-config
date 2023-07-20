@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+echo "[BEGIN] Starting dotfile deploy..."
+if [[ -n "$GIT_REPO_DIR" ]]; then
+    gitRepoDir="$GIT_REPO_DIR"
+else
+    gitRepoDir="$HOME/gitRepos/"
+fi
+
+bashConfigDir="$gitRepoDir/bash-config"
+if [[ -d "$bashConfigDir" ]]; then
+    echo "[START] Deploying Bash config..."
+    cd "$bashConfigDir"
+    git pull origin master
+    bash-deploy-config
+    echo "[SUCCESS] Deploy Bash config complete!"
+else
+    echo "[FAILURE] Bash config repo missing!"
+fi
+
+vimConfigDir="$gitRepoDir/vim-config"
+if [[ -d "$vimConfigDir" ]]; then
+    echo "[START] Deploying Vim config..."
+    cd "$vimConfigDir"
+    git pull origin master
+    vim-deploy-config
+    echo "[SUCCESS] Deploy Vim config complete!"
+else
+    echo "[FAILURE] Vim config repo missing!"
+fi
+
+echo "[FINISH] Completed dotfile deploy!"
