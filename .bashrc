@@ -50,10 +50,10 @@ alias shutd='command sudo shutdown now'
 alias sx='command startx'
 
 # ls Aliases
-alias la='ls -lah'
-alias lal='ls --color=always -lah | less'
-alias ll='ls -lah'
-alias lll='ls --color=always -lah | less'
+alias la='command file-index-listing-select'
+alias lal='command file-index-listing-select | less'
+alias ll='command file-index-listing-select'
+alias lll='command file-index-listing-select | less'
 
 # cd Aliases
 alias ..='cd ..'

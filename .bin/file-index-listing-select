@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+indexRegEx='^[0-9]+$'
+i=0
+if [[ -z "$1" ]]; then
+    # We have no index parameter.
+    echo "[Files in current directory:]"
+    echo "$PWD"
+    echo "==="
+    ls -alh --color=always | while read -r fileLine; do
+        if [[ "$fileLine" == total* ]]; then
+            # Do no label the directory size report.
+            echo "$fileLine"
+        else
+            echo -e "$i:\t$fileLine"
+            ((i++))
+        fi
+    done | column -t -s $'\t'
+elif [[ "$1" =~ $indexRegEx ]]; then
+    # We've been given an index.
+    ls -alh | while read -r fileLine; do
+        if [[ "$fileLine" == total* ]]; then
+            # Skip directory size line. True == noop.
+            continue
+        elif [[ "$1" == "$i" ]]; then
+            echo $(echo "$fileLine" | cut -d' ' -f 10)
+            break
+        fi
+        ((i++))
+    done
+else
+    #TODO make these useable via index too? Function that just takes a directory?
+    ls -alh --color=always "$1"
+fi
