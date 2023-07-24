@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+echo "[BEGIN] Starting dotfile export..."
+if [[ -n "$GIT_REPO_DIR" ]]; then
+    gitRepoDir="$GIT_REPO_DIR"
+else
+    gitRepoDir="$HOME/gitRepos/"
+fi
+
+#TODO simplify this with a function when more are added.
+
+bashConfigDir="$gitRepoDir/bash-config"
+if [[ -d "$bashConfigDir" ]]; then
+
+    echo "[START] Exporting Bash config..."
+    cd "$bashConfigDir"
+    git pull origin master
+    if !(bash-export-config-to-git); then
+        echo "[ERROR] Bash export script error. Exiting..."
+        exit 1
+    fi
+
+    if [[ $(git status --porcelain | wc -l) -gt 0 ]]; then
+        # If we have changes, the build the commit.
+        git add .
+        if !(git commit); then
+            echo "[CANCELLED] Bash commit aborted. Exiting..."
+            exit 1
+        fi
+    fi
+    echo "[SUCCESS] Export Bash config complete!"
+else
+    echo "[FAILURE] Bash config repo missing!"
+fi
+
+vimConfigDir="$gitRepoDir/vim-config"
+if [[ -d "$vimConfigDir" ]]; then
+
+    echo "[START] Exporting Vim config..."
+    cd "$vimConfigDir"
+    git pull origin master
+    if !(vim-export-config-to-git); then
+        echo "[ERROR] Vim export script error. Exiting..."
+        exit 1
+    fi
+
+    if [[ $(git status --porcelain | wc -l) -gt 0 ]]; then
+        # If we have changes, the build the commit.
+        git add .
+        if !(git commit); then
+            echo "[CANCELLED] Vim commit aborted. Exiting..."
+            exit 1
+        fi
+    fi
+    echo "[SUCCESS] Deploy Vim config complete!"
+else
+    echo "[FAILURE] Vim config repo missing!"
+fi
+
+echo "[FINISH] Completed dotfile export!"
