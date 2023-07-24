@@ -51,7 +51,7 @@ if [[ -d "$vimConfigDir" ]]; then
             exit 1
         fi
     fi
-    echo "[SUCCESS] Deploy Vim config complete!"
+    echo "[SUCCESS] Export Vim config complete!"
 else
     echo "[FAILURE] Vim config repo missing!"
 fi
