@@ -49,6 +49,9 @@ alias Q='exit'
 alias shutd='command sudo shutdown now'
 alias sx='command startx'
 
+alias dfe='command dotfile-export-config-to-git'
+alias dfd='command dotfile-deploy-config'
+
 # ls Aliases
 alias la='command file-index-listing-select'
 alias lal='command file-index-listing-select | less'
