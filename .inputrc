@@ -1,0 +1,8 @@
+#
+# This is the configuration file for all programs that use the
+# GNU readline library, bash included.
+#
+
+# Enable vim keybindings everywhere posible.
+set editing-mode vi
+set keymap vi
