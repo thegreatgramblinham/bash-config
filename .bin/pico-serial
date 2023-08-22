@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-defaultSerialDev="/dev/ttyACM1"
+defaultSerialDev="/dev/ttyACM0"
 if [[ -z "$1" ]]; then
     echo ">No serial target specified. Defaulting to $defaultSerialDev"
     targetDev="$defaultSerialDev"
