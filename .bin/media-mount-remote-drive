@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+while getopts 'p:' OPTION; do
+    case "$OPTION" in
+        p)
+            #Password
+            password="$OPTARG"
+            ;;
+        ?)
+            echo "Invalid usage!"
+            echo "backup-mount-remote-drive <-p password>"
+            exit 1;
+            ;;
+    esac
+done
+
+mntPath="/media/ksmedia/"
+user="tggh-media"
+backupDir="ksmedia"
+
+if [[ -z "$password" ]]; then
+    mount-remote-nas-drive -t "$backupDir" -m "$mntPath" -u "$user"
+else
+    mount-remote-nas-drive -t "$backupDir" -m "$mntPath" -u "$user" -p "$password"
+fi
