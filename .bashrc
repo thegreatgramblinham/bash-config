@@ -38,6 +38,8 @@ alias :q='exit'
 alias :Q='exit'
 alias Q='exit'
 
+alias c='clear'
+
 alias shutd='command sudo shutdown now'
 alias sx='command startx'
 
