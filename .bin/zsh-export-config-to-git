@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+zshDir="zsh-config"
+if [[ -z "$GIT_REPO_DIR" ]]; then
+    # If our zshrc isn't setup, this variable might not exist.
+    zshGitDir="$HOME/$zshDir"
+else
+    zshGitDir="$GIT_REPO_DIR/$zshDir"
+fi
+if [[ ! -d "$zshGitDir" ]]; then
+    echo ">Directory "$zshGitDir" does not exist. Exiting..."
+    exit 1
+fi
+
+echo ">Moving to $HOME"
+cd "$HOME" || (echo ">Wtf do you mean there's no home dir..." | exit 1)
+
+# Move all the local config to the git repo
+cp .zshrc "$zshGitDir/.zshrc"
+echo ">Copied .zshrc to $zshGitDir"
+
+

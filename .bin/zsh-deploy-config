@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+zshDir="zsh-config"
+if [[ -z "$GIT_REPO_DIR" ]]; then
+    # If our zshrc isn't setup, this variable might not exist.
+    zshGitDir="$HOME/gitRepos/$zshDir"
+else
+    zshGitDir="$GIT_REPO_DIR/$zshDir"
+fi
+echo ">Moving to $zshGitDir"
+cd "$zshGitDir" || (echo ">Directory $zshGitDir does not exist. Exiting..." | exit 1)
+
+rootUserDir="/root"
+cp .zshrc "$HOME/.zshrc"
+echo ">Copied .zshrc to $HOME"
+sudo cp .zshrc "$rootUserDir/.zshrc"
+echo ">Copied .zshrc to $rootUserDir"
+
+echo ">Please run 'src' or '. ~/.zshrc' to access the new config "
