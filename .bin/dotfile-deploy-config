@@ -40,4 +40,15 @@ else
     echo "[FAILURE] Vim config repo missing!"
 fi
 
+gitConfigDir="$gitRepoDir/git-config"
+if [[ -d "$gitConfigDir" ]]; then
+    echo "[START] Deploying git config..."
+    cd "$gitConfigDir"
+    git pull origin master
+    git-deploy-config
+    echo "[SUCCESS] Deploy git config complete!"
+else
+    echo "[FAILURE] git config repo missing!"
+fi
+
 echo "[FINISH] Completed dotfile deploy!"

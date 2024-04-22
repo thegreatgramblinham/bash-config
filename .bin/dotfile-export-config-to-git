@@ -6,76 +6,38 @@ else
     gitRepoDir="$HOME/gitRepos/"
 fi
 
-bashConfigDir="$gitRepoDir/bash-config"
-if [[ -d "$bashConfigDir" ]]; then
+# $1 - Name of git repo folder for config.
+# $2 - Name of export shell script.
+function config_push_to_git()
+{
+    configDir="$gitRepoDir/$1"
+    if [[ -d "$configDir" ]]; then
 
-    echo "[START] Exporting Bash config..."
-    cd "$bashConfigDir"
-    git pull origin master
-    if !(bash-export-config-to-git); then
-        echo "[ERROR] Bash export script error. Exiting..."
-        exit 1
-    fi
-
-    if [[ $(git status --porcelain | wc -l) -gt 0 ]]; then
-        # If we have changes, the build the commit.
-        git add .
-        if !(git commit); then
-            echo "[CANCELLED] Bash commit aborted. Exiting..."
+        echo "[START] Exporting to $1..."
+        cd "$configDir"
+        git pull origin master
+        if !($2); then
+            echo "[ERROR] Export script error. Exiting..."
             exit 1
         fi
-    fi
-    echo "[SUCCESS] Export Bash config complete!"
-else
-    echo "[FAILURE] Bash config repo missing!"
-fi
 
-zshConfigDir="$gitRepoDir/zsh-config"
-if [[ -d "$zshConfigDir" ]]; then
-
-    echo "[START] Exporting zsh config..."
-    cd "$zshConfigDir"
-    git pull origin master
-    if !(zsh-export-config-to-git); then
-        echo "[ERROR] zsh export script error. Exiting..."
-        exit 1
-    fi
-
-    if [[ $(git status --porcelain | wc -l) -gt 0 ]]; then
-        # If we have changes, the build the commit.
-        git add .
-        if !(git commit); then
-            echo "[CANCELLED] zsh commit aborted. Exiting..."
-            exit 1
+        if [[ $(git status --porcelain | wc -l) -gt 0 ]]; then
+            # If we have changes, the build the commit.
+            git add .
+            if !(git commit); then
+                echo "[CANCELLED] Git commit aborted. Exiting..."
+                exit 1
+            fi
         fi
+        echo "[SUCCESS] Export $1 complete!"
+    else
+        echo "[FAILURE] $1 repo missing!"
     fi
-    echo "[SUCCESS] Export zsh config complete!"
-else
-    echo "[FAILURE] zsh config repo missing!"
-fi
+}
 
-vimConfigDir="$gitRepoDir/vim-config"
-if [[ -d "$vimConfigDir" ]]; then
-
-    echo "[START] Exporting Vim config..."
-    cd "$vimConfigDir"
-    git pull origin master
-    if !(vim-export-config-to-git); then
-        echo "[ERROR] Vim export script error. Exiting..."
-        exit 1
-    fi
-
-    if [[ $(git status --porcelain | wc -l) -gt 0 ]]; then
-        # If we have changes, the build the commit.
-        git add .
-        if !(git commit); then
-            echo "[CANCELLED] Vim commit aborted. Exiting..."
-            exit 1
-        fi
-    fi
-    echo "[SUCCESS] Export Vim config complete!"
-else
-    echo "[FAILURE] Vim config repo missing!"
-fi
+config_push_to_git "bash-config" "bash-export-config-to-git"
+config_push_to_git "vim-config" "vim-export-config-to-git"
+config_push_to_git "zsh-config" "zsh-export-config-to-git"
+config_push_to_git "git-config" "git-export-config-to-git"
 
 echo "[FINISH] Completed dotfile export!"

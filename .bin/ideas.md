@@ -4,7 +4,6 @@ Shell Script Ideas
  - Improve gsdir to print files changed and any pending local commits
  - gstdrop - drop all stash contents from repo
  - SSH commands to all local servers like 'shutdown' and 'reboot'
- - SSH commands to all local servers like 'shutdown' and 'reboot'
  - Binary, hex and decimal converter
  - Dotfile push all
  - Add git config to dotfile scripts

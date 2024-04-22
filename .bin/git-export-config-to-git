@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+gitDir="git-config"
+if [[ -z "$GIT_REPO_DIR" ]]; then
+    # If our bashrc isn't setup, this variable might not exist.
+    gitGitDir="$HOME/$gitDir"
+else
+    gitGitDir="$GIT_REPO_DIR/$gitDir"
+fi
+echo ">Moving to $gitGitDir"
+cd "$gitGitDir" || (echo ">Directory $gitGitDir does not exist. Exiting..." | exit 1)
+
+echo ">Moving to $HOME"
+cd "$HOME" || (echo ">Wtf do you mean there's no home dir..." | exit 1)
+
+# Move all the local config to the git repo
+cp .gitrc "$gitGitDir/.gitrc"
+echo ">Copied .gitrc to $gitGitDir"
+cp -r .git "$gitGitDir/"
+echo ">Copied .git to $gitGitDir"
