@@ -6,8 +6,6 @@ else
     gitRepoDir="$HOME/gitRepos/"
 fi
 
-#TODO simplify this with a function when more are added.
-
 bashConfigDir="$gitRepoDir/bash-config"
 if [[ -d "$bashConfigDir" ]]; then
 
@@ -30,6 +28,30 @@ if [[ -d "$bashConfigDir" ]]; then
     echo "[SUCCESS] Export Bash config complete!"
 else
     echo "[FAILURE] Bash config repo missing!"
+fi
+
+zshConfigDir="$gitRepoDir/zsh-config"
+if [[ -d "$zshConfigDir" ]]; then
+
+    echo "[START] Exporting zsh config..."
+    cd "$zshConfigDir"
+    git pull origin master
+    if !(zsh-export-config-to-git); then
+        echo "[ERROR] zsh export script error. Exiting..."
+        exit 1
+    fi
+
+    if [[ $(git status --porcelain | wc -l) -gt 0 ]]; then
+        # If we have changes, the build the commit.
+        git add .
+        if !(git commit); then
+            echo "[CANCELLED] zsh commit aborted. Exiting..."
+            exit 1
+        fi
+    fi
+    echo "[SUCCESS] Export zsh config complete!"
+else
+    echo "[FAILURE] zsh config repo missing!"
 fi
 
 vimConfigDir="$gitRepoDir/vim-config"

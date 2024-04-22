@@ -18,6 +18,17 @@ else
     echo "[FAILURE] Bash config repo missing!"
 fi
 
+zshConfigDir="$gitRepoDir/zsh-config"
+if [[ -d "$zshConfigDir" ]]; then
+    echo "[START] Deploying zsh config..."
+    cd "$zshConfigDir"
+    git pull origin master
+    zsh-deploy-config
+    echo "[SUCCESS] Deploy zsh config complete!"
+else
+    echo "[FAILURE] zsh config repo missing!"
+fi
+
 vimConfigDir="$gitRepoDir/vim-config"
 if [[ -d "$vimConfigDir" ]]; then
     echo "[START] Deploying Vim config..."
