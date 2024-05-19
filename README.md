@@ -4,7 +4,6 @@ This repository contains config files and information for setting up Bash accord
 
 Inclusions
 =
- - [Ble.sh](https://github.com/akinomyoga/ble.sh)
  - [fzf - (install via package manager)](https://github.com/junegunn/fzf)
  - [shellcheck - (install via package manager)](https://github.com/koalaman/shellcheck)
  - [tldr - (install via package manager)](https://github.com/tldr-pages/tldr)

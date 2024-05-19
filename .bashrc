@@ -13,12 +13,6 @@ export PICO_SDK_PATH="$GIT_REPO_DIR/pico-sdk"
 PATH=$PATH:$HOME/.bin
 #PATH=$PATH:$HOME/.bin/git
 
-# ble.sh Config
-# =============
-if [[ -e "$GIT_REPO_DIR/ble.sh/out/ble.sh" ]]; then
-    source "$GIT_REPO_DIR/ble.sh/out/ble.sh"
-fi
-
 # Set a colored shell line as a default. This will be overruled by oh-my-bash if installed.
 color_prompt=yes
 if [ "$color_prompt" = yes ]; then
