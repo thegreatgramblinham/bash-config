@@ -14,7 +14,5 @@ echo ">Moving to $HOME"
 cd "$HOME" || (echo ">Wtf do you mean there's no home dir..." | exit 1)
 
 # Move all the local config to the git repo
-cp .gitrc "$gitGitDir/.gitrc"
-echo ">Copied .gitrc to $gitGitDir"
-cp -r .git "$gitGitDir/"
-echo ">Copied .git to $gitGitDir"
+cp .gitconfig "$gitGitDir/.gitconfig"
+echo ">Copied .gitconfig to $gitGitDir"
