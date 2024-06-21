@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+piOledProjectDir="/home/tggh/pi-pc-oled"
+pyVirtEnvPath="$piOledProjectDir/oled-py-virtual-env/bin/activate"
+scriptLibPath="$piOledProjectDir/luma.examples/examples"
+scriptTarget="matrix.py"
+source $pyVirtEnvPath
+python "$scriptLibPath/$scriptTarget"
