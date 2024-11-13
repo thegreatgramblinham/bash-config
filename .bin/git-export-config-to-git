@@ -16,3 +16,5 @@ cd "$HOME" || (echo ">Wtf do you mean there's no home dir..." | exit 1)
 # Move all the local config to the git repo
 cp .gitconfig "$gitGitDir/.gitconfig"
 echo ">Copied .gitconfig to $gitGitDir"
+cp .gitignore "$gitGitDir/.gitignore"
+echo ">Copied .gitignore to $gitGitDir"
